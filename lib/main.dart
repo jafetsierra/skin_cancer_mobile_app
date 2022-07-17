@@ -1,5 +1,6 @@
 import 'package:skin_cancer_app/pages/home.dart';
 import 'package:flutter/material.dart';
+import 'package:skin_cancer_app/pages/prediction.dart';
 
 void main() {
   runApp(const MyApp());
@@ -10,9 +11,12 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
+      routes: {
+        '/': (context) => HomePage(),
+        '/prediction':(context) => Prediction(),
+      },
       debugShowCheckedModeBanner: false,
-      home: HomePage(),
     );
   }
 }

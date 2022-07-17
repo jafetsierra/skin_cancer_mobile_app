@@ -1,7 +1,10 @@
+import 'package:skin_cancer_app/utils/appbar.dart';
 import 'package:skin_cancer_app/utils/listcat.dart';
 import 'package:flutter/material.dart';
 
+
 class HomePage extends StatefulWidget {
+
   const HomePage({Key? key}) : super(key: key);
 
   @override
@@ -9,54 +12,30 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final Color primaryColor   = Colors.white;
+  final Color secondaryColor = Colors.cyan.shade200; 
+  final Color auxColor       = Colors.indigo.shade300;
+  final Color textColor      = Colors.orangeAccent;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
         child: Container(
           decoration: BoxDecoration(
-            gradient: LinearGradient(begin: Alignment.topLeft,end: Alignment.bottomRight,colors: [Colors.cyan.shade200,Colors.purpleAccent.shade100]),
+            gradient: LinearGradient(begin: Alignment.topLeft,end: Alignment.bottomRight,colors: [primaryColor,secondaryColor,auxColor]),
           ),
           child: Column(
             children: [
-              //appbar
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal:10),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    //name
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: const [
-                        SizedBox(height: 12,),
-                        Text('Welcome to',
-                        style: TextStyle(fontWeight: FontWeight.bold,fontSize: 18),),
-                        SizedBox(height: 8,),
-                        Text('SkinCancer App',
-                        style: TextStyle(fontWeight: FontWeight.bold,fontSize: 24),)
-                      ],
-                    ),
-                    //applogo
-                    Container(
-                      padding: const EdgeInsets.all(5),
-                      height: 50,
-                      decoration: BoxDecoration(
-                        color: Colors.deepPurple[100],
-                        borderRadius: BorderRadius.circular(15)
-                        ),
-                      child: Image.asset('lib/icons/ai.png'))
-                  ],
-                ),
-              ),
+              //*************appbar
+              CustomAppBar(primaryColor: primaryColor, secondaryColor: secondaryColor, auxColor: auxColor),
               const SizedBox(height: 30,),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal:20.0),
                 child: Container(
                     padding: const EdgeInsets.all(10),
-                    decoration: BoxDecoration(color: Colors.cyan[100], boxShadow: [
+                    decoration: BoxDecoration(color: primaryColor, boxShadow: [
                       BoxShadow(
-                        color: Colors.purpleAccent.withOpacity(0.2),
+                        color: auxColor,
                         spreadRadius: 1,
                         blurRadius: 5,
                         offset: Offset(0, 7), // changes position of shadow
@@ -97,7 +76,17 @@ class _HomePageState extends State<HomePage> {
                 padding: const EdgeInsets.symmetric(horizontal:20.0),
                 child: Container(
                   padding: const EdgeInsets.all(15),
-                  decoration: BoxDecoration(color: Colors.deepPurple[100],borderRadius: BorderRadius.circular(12)),
+                  decoration: BoxDecoration(
+                    color:primaryColor,
+                    borderRadius: BorderRadius.circular(12),
+                    boxShadow: [
+                                  BoxShadow(
+                                    color: auxColor,
+                                    spreadRadius: 1,
+                                    blurRadius: 5,
+                                    offset: Offset(0, 7), // changes position of shadow
+                                    ),
+                              ]),
                   child: Row(
                     children: [
                       //picture
@@ -112,16 +101,18 @@ class _HomePageState extends State<HomePage> {
                             const SizedBox(height: 10,),
                             Container(
                               padding: const EdgeInsets.all(12),
-                              decoration: BoxDecoration(color: Colors.deepPurple[300], boxShadow: [
-                                BoxShadow(
-                                  color: Colors.purpleAccent.withOpacity(0.2),
-                                  spreadRadius: 1,
-                                  blurRadius: 5,
-                                  offset: Offset(0, 7), // changes position of shadow
-                                  ),
+                              decoration: BoxDecoration(
+                                color: secondaryColor, 
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: auxColor,
+                                    spreadRadius: 1,
+                                    blurRadius: 5,
+                                    offset: Offset(0, 7), // changes position of shadow
+                                    ),
                               ],
                               borderRadius: BorderRadius.circular(12)),
-                              child: const Center(child: Text('About an docs',style: TextStyle(color: Colors.white),),),
+                              child: const Center(child: Text('About an docs',style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold),),),
                             )
                           ],
                         ),
@@ -139,7 +130,18 @@ class _HomePageState extends State<HomePage> {
                 child: Container(
                   padding: const EdgeInsets.all(15),
                   height: 160,
-                  decoration: BoxDecoration(color: Colors.deepPurple[100],borderRadius: BorderRadius.circular(12)),
+                  decoration: BoxDecoration(
+                    color: primaryColor,
+                    borderRadius: BorderRadius.circular(12),
+                     boxShadow: [
+                      BoxShadow(
+                        color: auxColor,
+                        spreadRadius: 1,
+                        blurRadius: 5,
+                        offset: Offset(0, 7), // changes position of shadow
+                        )
+                     ]
+                    ),
                   child: Row(
                     children: [
                       //picture
@@ -155,17 +157,31 @@ class _HomePageState extends State<HomePage> {
                             const Text('Upload an image to make a diagnosis.'),
                             const SizedBox(height: 10,),
                             Container(
-                              padding: const EdgeInsets.all(12),
+                              padding: const EdgeInsets.all(2),
                               decoration: BoxDecoration(
-                                color: Colors.deepPurple[300],
+                                color: secondaryColor,
                                 borderRadius: BorderRadius.circular(12),
                                 boxShadow: [BoxShadow(
-                                  color: Colors.deepPurple.withOpacity(0.2),
+                                  color: auxColor,
                                   spreadRadius: 1,
                                   blurRadius: 5,
                                   offset: Offset(0,7)
                                   )]),
-                              child: const Center(child: Text('Diagnose',style: TextStyle(color: Colors.white),),),
+                              child: Center(
+                                child: 
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.pushNamed(context, '/prediction');
+                                  },
+                                  child: 
+                                    Expanded(
+                                      child: Text(
+                                        'Diagnose',
+                                        style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold),
+                                      ),
+                                    )
+                                ),
+                              ),
                             )
                           ],
                         ),
@@ -194,11 +210,11 @@ class _HomePageState extends State<HomePage> {
                 child: ListView(
                   scrollDirection: Axis.horizontal,
                   children: [
-                    ListCat(imgPath: 'lib/icons/tensorflow-icon.png',category: 'Tensorflow',),
-                    ListCat(imgPath: 'lib/icons/python.png',category: 'Python',),
-                    ListCat(imgPath: 'lib/icons/flutter-icon.png',category: 'Flutter',),
-                    ListCat(imgPath: 'lib/icons/docker-icon.png',category: 'Docker',),
-                    ListCat(imgPath: 'lib/icons/github.png',category: 'GitHub',),
+                    ListCat(imgPath: 'lib/icons/tensorflow-icon.png',category: 'Tensorflow',primaryColor: primaryColor,secondaryColor: secondaryColor,auxColor: auxColor,),
+                    ListCat(imgPath: 'lib/icons/python.png',category: 'Python',primaryColor: primaryColor,secondaryColor: secondaryColor,auxColor: auxColor,),
+                    ListCat(imgPath: 'lib/icons/flutter-icon.png',category: 'Flutter',primaryColor: primaryColor,secondaryColor: secondaryColor,auxColor: auxColor,),
+                    ListCat(imgPath: 'lib/icons/docker-icon.png',category: 'Docker',primaryColor: primaryColor,secondaryColor: secondaryColor,auxColor: auxColor,),
+                    ListCat(imgPath: 'lib/icons/github.png',category: 'GitHub',primaryColor: primaryColor,secondaryColor: secondaryColor,auxColor: auxColor,),
                   ]
                 ),
               ),
