@@ -1,6 +1,8 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:skin_cancer_app/utils/appbar.dart';
+import 'dart:io';
 
 class Prediction extends StatefulWidget {
   Prediction({Key? key}) : super(key: key);
@@ -10,22 +12,32 @@ class Prediction extends StatefulWidget {
 }
 
 class _PredictionState extends State<Prediction> {
+  
+  ///file variable
   PlatformFile? pickedFile;
-
+  
+  ///color theme 
   final Color primaryColor   = Colors.white;
   final Color secondaryColor = Colors.cyan.shade200; 
   final Color auxColor       = Colors.indigo.shade300;
   
+  ///file selection from galery
   Future selectFile() async{
-    final result =  await FilePicker.platform.pickFiles();
+    final result =  await FilePicker.platform.pickFiles(type: FileType.image);
     if (result==null) return;
     setState(() {
       pickedFile = result.files.first; 
     });
   }
+  ///take a picture from the camera
   Future uploadFile() async {
     
   }
+  ///make a prediction with tensorflow model endpoint
+  String makePrediction(){
+    return 'prediction made';
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,38 +54,74 @@ class _PredictionState extends State<Prediction> {
             children: [
               CustomAppBar(primaryColor: primaryColor, secondaryColor: secondaryColor, auxColor: auxColor),
               const SizedBox(height: 30,),
+              ///if the file was upload or selected i'll be displayed on the screen
               if (pickedFile != null)
                 Expanded(
-                  child: Container(
-                    color: secondaryColor,
-                    child: Text(pickedFile!.name)
-                  ),
-                ),
-              //Diagnosis container
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal:20.0),
-                child: Container(
-                  height: 120,
-                  decoration: BoxDecoration(
-                    color: secondaryColor,
-                    boxShadow: [BoxShadow(
-                      color: auxColor,
-                      spreadRadius: 1,
-                      blurRadius: 5,
-                      offset: Offset(0,0)
-                    ),]
-                  ),
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      ElevatedButton(onPressed: selectFile , child: const Text('Select File')),
-                      ElevatedButton(onPressed: uploadFile, child: const Text('Update File')),
+                      Container(
+                        height: 300,
+                        color: secondaryColor,
+                        child: //Text(pickedFile!.name)
+                          //Text('${pickedFile.runtimeType}'),
+                          Image.file(
+                            File(pickedFile!.path.toString()),
+                            fit: BoxFit.cover,
+                          )
+                      ),
+                      ///button for prediction or diagnosis
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(12),
+                            boxShadow: [
+                              BoxShadow(
+                                color: auxColor,
+                                blurRadius: 5,
+                                spreadRadius: 1,
+                                offset: Offset(0,7)
+                                )
+                            ]
+                          ),
+                          child: ElevatedButton(
+                            onPressed: makePrediction, 
+                            child: const Text('Make prediction',style: TextStyle(color: Colors.white,fontSize: 20,fontWeight: FontWeight.bold),),
+                            style: ElevatedButton.styleFrom(
+                              primary: auxColor,
+                              shadowColor: primaryColor,
+                              minimumSize: Size(300, 100),
+                            )
+                          ),
+                        ),
+                      )
                     ],
-                  )
+                  ),
                 ),
-              ),
-  
 
+              ///Diagnosis container
+              if (pickedFile ==null)
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal:20.0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: secondaryColor,
+                      boxShadow: [BoxShadow(
+                        color: auxColor,
+                        spreadRadius: 1,
+                        blurRadius: 5,
+                        offset: Offset(0,0)
+                      ),]
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        ElevatedButton(onPressed: selectFile , child: const Text('Select File'),style: ButtonStyle(minimumSize: MaterialStateProperty.all(Size(250,100)),),),
+                        ],
+                    )
+                  ),
+                ),
+              ///return to the home page
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal:20.0),
                 child: Container(
