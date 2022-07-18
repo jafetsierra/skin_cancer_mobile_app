@@ -1,8 +1,12 @@
+import 'dart:convert';
+
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:skin_cancer_app/utils/appbar.dart';
 import 'dart:io';
+
+import 'package:skin_cancer_app/utils/diagnose.dart';
+import 'package:skin_cancer_app/utils/result.dart';
 
 class Prediction extends StatefulWidget {
   Prediction({Key? key}) : super(key: key);
@@ -15,7 +19,7 @@ class _PredictionState extends State<Prediction> {
   
   ///file variable
   PlatformFile? pickedFile;
-  
+  final String url = "https://skin-cancer-img.herokuapp.com/";
   ///color theme 
   final Color primaryColor   = Colors.white;
   final Color secondaryColor = Colors.cyan.shade200; 
@@ -28,10 +32,6 @@ class _PredictionState extends State<Prediction> {
     setState(() {
       pickedFile = result.files.first; 
     });
-  }
-  ///take a picture from the camera
-  Future uploadFile() async {
-    
   }
   ///make a prediction with tensorflow model endpoint
   String makePrediction(){
@@ -85,7 +85,15 @@ class _PredictionState extends State<Prediction> {
                             ]
                           ),
                           child: ElevatedButton(
-                            onPressed: makePrediction, 
+                            onPressed: () async{
+                              var response = await sendImage(url, pickedFile!.path.toString());
+                              print(response.statusCode);
+                              var values = json.decode(response.body);
+                              print(values.runtimeType);
+                              showDialog(context: context, 
+                                builder: (BuildContext context) => predictionResult(context, values.toString()));
+                              
+                            },
                             child: const Text('Make prediction',style: TextStyle(color: Colors.white,fontSize: 20,fontWeight: FontWeight.bold),),
                             style: ElevatedButton.styleFrom(
                               primary: auxColor,
