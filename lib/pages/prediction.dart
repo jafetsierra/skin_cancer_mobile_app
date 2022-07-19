@@ -1,15 +1,14 @@
 import 'dart:convert';
-
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:skin_cancer_app/utils/appbar.dart';
 import 'dart:io';
-
 import 'package:skin_cancer_app/utils/diagnose.dart';
 import 'package:skin_cancer_app/utils/result.dart';
 
+
 class Prediction extends StatefulWidget {
-  Prediction({Key? key}) : super(key: key);
+  const Prediction({Key? key}) : super(key: key);
 
   @override
   State<Prediction> createState() => _PredictionState();
@@ -71,36 +70,30 @@ class _PredictionState extends State<Prediction> {
                       ),
                       ///button for prediction or diagnosis
                       Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(12),
-                            boxShadow: [
-                              BoxShadow(
-                                color: auxColor,
-                                blurRadius: 5,
-                                spreadRadius: 1,
-                                offset: Offset(0,7)
-                                )
-                            ]
+                        padding: const EdgeInsets.all(25.0),
+                        child: TextButton(
+                          style: TextButton.styleFrom(
+                            padding: const EdgeInsets.all(20.0),
+                            primary: Colors.black,
+                            textStyle: const TextStyle(fontSize: 20,fontWeight: FontWeight.bold),
+                            backgroundColor: Colors.white,
+                            shadowColor: Colors.deepPurple.shade400,
+                            elevation: 20
                           ),
-                          child: ElevatedButton(
-                            onPressed: () async{
-                              var response = await sendImage(url, pickedFile!.path.toString());
-                              print(response.statusCode);
-                              var values = json.decode(response.body);
-                              print(values.runtimeType);
+                          onPressed: () async{
+                            var response = await sendImage(url, pickedFile!.path.toString());
+                            if (response.statusCode!=200){
                               showDialog(context: context, 
-                                builder: (BuildContext context) => predictionResult(context, values.toString()));
-                              
-                            },
-                            child: const Text('Make prediction',style: TextStyle(color: Colors.white,fontSize: 20,fontWeight: FontWeight.bold),),
-                            style: ElevatedButton.styleFrom(
-                              primary: auxColor,
-                              shadowColor: primaryColor,
-                              minimumSize: Size(300, 100),
-                            )
-                          ),
+                              builder: (BuildContext context) => errorResult(context, response.statusCode.toString()));
+                            }
+                            else {
+                              var values = json.decode(response.body);
+                              values.forEach((k,v) => print(v['prediction'].toString()));
+                              showDialog(context: context, 
+                              builder: (BuildContext context) => predictionResult(context, values.toString()));
+                            }
+                          },
+                          child: const Text('Make Diagnosis'),
                         ),
                       )
                     ],
@@ -110,25 +103,20 @@ class _PredictionState extends State<Prediction> {
               ///Diagnosis container
               if (pickedFile ==null)
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal:20.0),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: secondaryColor,
-                      boxShadow: [BoxShadow(
-                        color: auxColor,
-                        spreadRadius: 1,
-                        blurRadius: 5,
-                        offset: Offset(0,0)
-                      ),]
-                    ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        ElevatedButton(onPressed: selectFile , child: const Text('Select File'),style: ButtonStyle(minimumSize: MaterialStateProperty.all(Size(250,100)),),),
-                        ],
-                    )
-                  ),
-                ),
+                        padding: const EdgeInsets.all(25.0),
+                        child: TextButton(
+                          style: TextButton.styleFrom(
+                            padding: const EdgeInsets.all(20.0),
+                            primary: Colors.black,
+                            textStyle: const TextStyle(fontSize: 20,fontWeight: FontWeight.bold),
+                            backgroundColor: Colors.white,
+                            shadowColor: Colors.deepPurple.shade400,
+                            elevation: 20
+                          ),
+                          onPressed: selectFile,
+                          child: const Text('Select file from galery'),
+                        ),
+                      ),
               ///return to the home page
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal:20.0),
@@ -143,7 +131,7 @@ class _PredictionState extends State<Prediction> {
                         color: auxColor,
                         spreadRadius: 1,
                         blurRadius: 5,
-                        offset: Offset(0, 7), // changes position of shadow
+                        offset: const Offset(0, 7), // changes position of shadow
                         )
                      ]
                     ),
@@ -163,7 +151,7 @@ class _PredictionState extends State<Prediction> {
                                   color: auxColor,
                                   spreadRadius: 1,
                                   blurRadius: 5,
-                                  offset: Offset(0,7)
+                                  offset: const Offset(0,7)
                                   )]),
                               child: Center(
                                 child: 
@@ -172,7 +160,7 @@ class _PredictionState extends State<Prediction> {
                                     Navigator.pop(context);
                                   },
                                   child: 
-                                    Expanded(
+                                    const Expanded(
                                       child: Text(
                                         'Return Home',
                                         style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold),

@@ -6,8 +6,23 @@ Widget predictionResult(BuildContext context, String rta){
     content: Text(rta),
     actions: <Widget>[
       TextButton(onPressed: () => Navigator.pop(context,'Ok'), 
-      child: const Text('Ok'))
+        child: 
+          const Text('Ok')
+      )
+    ],
+  );
+  
+}
+
+Widget errorResult(BuildContext context, String error){
+  return AlertDialog(
+    title: const Text('Error in the application'),
+    content: Text(error),
+    actions: [
+      TextButton(onPressed: () => Navigator.pop(context,'Ok'), 
+        child: 
+          const Text('Ok')
+      )
     ],
   );
 }
-

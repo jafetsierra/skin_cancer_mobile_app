@@ -38,7 +38,7 @@ class _HomePageState extends State<HomePage> {
                         color: auxColor,
                         spreadRadius: 1,
                         blurRadius: 5,
-                        offset: Offset(0, 7), // changes position of shadow
+                        offset: const Offset(0, 7), // changes position of shadow
                         ),
                     ],
                     borderRadius: BorderRadius.circular(12)),
@@ -70,61 +70,41 @@ class _HomePageState extends State<HomePage> {
                     ),
                 ),
               ),
+
+
               const SizedBox(height: 30,),
-              //---------About
+
+
+              ///libraries used
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal:20.0),
-                child: Container(
-                  padding: const EdgeInsets.all(15),
-                  decoration: BoxDecoration(
-                    color:primaryColor,
-                    borderRadius: BorderRadius.circular(12),
-                    boxShadow: [
-                                  BoxShadow(
-                                    color: auxColor,
-                                    spreadRadius: 1,
-                                    blurRadius: 5,
-                                    offset: Offset(0, 7), // changes position of shadow
-                                    ),
-                              ]),
-                  child: Row(
-                    children: [
-                      //picture
-                      //text
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children:  [
-                            const Text('About the project',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),),
-                            const SizedBox(height: 10,),
-                            const Text('How the model was made and more.'),
-                            const SizedBox(height: 10,),
-                            Container(
-                              padding: const EdgeInsets.all(12),
-                              decoration: BoxDecoration(
-                                color: secondaryColor, 
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: auxColor,
-                                    spreadRadius: 1,
-                                    blurRadius: 5,
-                                    offset: Offset(0, 7), // changes position of shadow
-                                    ),
-                              ],
-                              borderRadius: BorderRadius.circular(12)),
-                              child: const Center(child: Text('About an docs',style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold),),),
-                            )
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
+                padding: const EdgeInsets.symmetric(horizontal:22.0),
+                child: Container(child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: const [
+                    Text('Technologies and Libraries used',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 15),),
+                    Text('References',style: TextStyle(fontSize: 12,fontWeight: FontWeight.w300),)
+                  ],
+                ),),
+              ),
+              const SizedBox(height: 5,),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                height: 80,
+                child: ListView(
+                  scrollDirection: Axis.horizontal,
+                  children: [
+                    ListCat(imgPath: 'lib/icons/tensorflow-icon.png',category: 'Tensorflow',primaryColor: primaryColor,secondaryColor: secondaryColor,auxColor: auxColor,),
+                    ListCat(imgPath: 'lib/icons/python.png',category: 'Python',primaryColor: primaryColor,secondaryColor: secondaryColor,auxColor: auxColor,),
+                    ListCat(imgPath: 'lib/icons/flutter-icon.png',category: 'Flutter',primaryColor: primaryColor,secondaryColor: secondaryColor,auxColor: auxColor,),
+                    ListCat(imgPath: 'lib/icons/docker-icon.png',category: 'Docker',primaryColor: primaryColor,secondaryColor: secondaryColor,auxColor: auxColor,),
+                    ListCat(imgPath: 'lib/icons/github.png',category: 'GitHub',primaryColor: primaryColor,secondaryColor: secondaryColor,auxColor: auxColor,),
+                  ]
                 ),
               ),
 
+
               const SizedBox(height: 30,),
 
-              //---------card
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal:20.0),
                 child: Container(
@@ -138,7 +118,7 @@ class _HomePageState extends State<HomePage> {
                         color: auxColor,
                         spreadRadius: 1,
                         blurRadius: 5,
-                        offset: Offset(0, 7), // changes position of shadow
+                        offset: const Offset(0, 7), // changes position of shadow
                         )
                      ]
                     ),
@@ -174,7 +154,7 @@ class _HomePageState extends State<HomePage> {
                                     Navigator.pushNamed(context, '/prediction');
                                   },
                                   child: 
-                                    Expanded(
+                                      const Expanded(
                                       child: Text(
                                         'Diagnose',
                                         style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold),
@@ -190,35 +170,61 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
               ),
-              
-              const SizedBox(height: 20,),
-              //horizontallistview
+
+
+              SizedBox(height: 30,),
+
+
+              ///---------About
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal:22.0),
-                child: Container(child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: const [
-                    Text('Technologies and Libraries used',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 15),),
-                    Text('References',style: TextStyle(fontSize: 12,fontWeight: FontWeight.w300),)
-                  ],
-                ),),
-              ),
-              const SizedBox(height: 5,),
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                height: 80,
-                child: ListView(
-                  scrollDirection: Axis.horizontal,
-                  children: [
-                    ListCat(imgPath: 'lib/icons/tensorflow-icon.png',category: 'Tensorflow',primaryColor: primaryColor,secondaryColor: secondaryColor,auxColor: auxColor,),
-                    ListCat(imgPath: 'lib/icons/python.png',category: 'Python',primaryColor: primaryColor,secondaryColor: secondaryColor,auxColor: auxColor,),
-                    ListCat(imgPath: 'lib/icons/flutter-icon.png',category: 'Flutter',primaryColor: primaryColor,secondaryColor: secondaryColor,auxColor: auxColor,),
-                    ListCat(imgPath: 'lib/icons/docker-icon.png',category: 'Docker',primaryColor: primaryColor,secondaryColor: secondaryColor,auxColor: auxColor,),
-                    ListCat(imgPath: 'lib/icons/github.png',category: 'GitHub',primaryColor: primaryColor,secondaryColor: secondaryColor,auxColor: auxColor,),
-                  ]
+                padding: const EdgeInsets.symmetric(horizontal:20.0),
+                child: Container(
+                  padding: const EdgeInsets.all(15),
+                  decoration: BoxDecoration(
+                    color:primaryColor,
+                    borderRadius: BorderRadius.circular(12),
+                    boxShadow: [
+                                  BoxShadow(
+                                    color: auxColor,
+                                    spreadRadius: 1,
+                                    blurRadius: 5,
+                                    offset: const Offset(0, 7), // changes position of shadow
+                                    ),
+                              ]),
+                  child: Row(
+                    children: [
+                      //picture
+                      //text
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children:  [
+                            const Text('About the project',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),),
+                            const SizedBox(height: 10,),
+                            const Text('How the model was made and more.'),
+                            const SizedBox(height: 10,),
+                            Container(
+                              padding: const EdgeInsets.all(12),
+                              decoration: BoxDecoration(
+                                color: secondaryColor, 
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: auxColor,
+                                    spreadRadius: 1,
+                                    blurRadius: 5,
+                                    offset: const Offset(0, 7), // changes position of shadow
+                                    ),
+                              ],
+                              borderRadius: BorderRadius.circular(12)),
+                              child: const Center(child: Text('About an docs',style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold),),),
+                            )
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
-              //doctor list
             ],
           ),
         ),
