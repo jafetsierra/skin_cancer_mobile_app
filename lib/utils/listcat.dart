@@ -7,6 +7,7 @@ class ListCat extends StatelessWidget {
   final Color primaryColor;
   final Color secondaryColor;
   final Color auxColor; 
+  final Color textcolor;
 
   ListCat({
     required this.imgPath,
@@ -14,6 +15,7 @@ class ListCat extends StatelessWidget {
     required this.primaryColor,
     required this.secondaryColor,
     required this.auxColor,
+    required this.textcolor
   });
 
   @override
@@ -28,7 +30,7 @@ class ListCat extends StatelessWidget {
                                   color: auxColor,
                                   spreadRadius: 1,
                                   blurRadius: 5,
-                                  offset: Offset(-5,0)
+                                  offset: const Offset(-5,0)
                                   )]),
               padding: const EdgeInsets.all(10),
               
@@ -37,7 +39,7 @@ class ListCat extends StatelessWidget {
                 children: [
                   Image.asset(imgPath,height: 40,),
                   const SizedBox(width: 8,),
-                  Text(category,style: const TextStyle(color: Colors.black,fontWeight: FontWeight.bold),),
+                  Text(category,style: TextStyle(color: textcolor,fontWeight: FontWeight.bold),),
                 ],
               )
             ),

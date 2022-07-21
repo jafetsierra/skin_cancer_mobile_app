@@ -37,6 +37,7 @@ dependencies:
   file_picker: ^4.6.1
   permission_handler:
   http:
+  flutter_markdown: ^0.6.10
 dev_dependencies:
   flutter_test:
     sdk: flutter

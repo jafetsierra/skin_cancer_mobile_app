@@ -8,7 +8,18 @@ import 'package:skin_cancer_app/utils/result.dart';
 
 
 class Prediction extends StatefulWidget {
-  const Prediction({Key? key}) : super(key: key);
+  final Color primaryColor ;
+  final Color secondaryColor ; 
+  final Color auxColor;
+  final Color textColor;
+
+  const Prediction({Key? key, 
+    required this.primaryColor,
+    required this.secondaryColor,
+    required this.auxColor,
+    required this.textColor,
+
+  }) : super(key: key);
 
   @override
   State<Prediction> createState() => _PredictionState();
@@ -19,11 +30,7 @@ class _PredictionState extends State<Prediction> {
   ///file variable
   PlatformFile? pickedFile;
   final String url = "https://skin-cancer-img.herokuapp.com/";
-  ///color theme 
-  final Color primaryColor   = Colors.white;
-  final Color secondaryColor = Colors.cyan.shade200; 
-  final Color auxColor       = Colors.indigo.shade300;
-  
+
   ///file selection from galery
   Future selectFile() async{
     final result =  await FilePicker.platform.pickFiles(type: FileType.image);
@@ -33,25 +40,21 @@ class _PredictionState extends State<Prediction> {
     });
   }
   ///make a prediction with tensorflow model endpoint
-  String makePrediction(){
-    return 'prediction made';
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
         child: Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: [primaryColor,secondaryColor,auxColor])
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage('lib/images/background.jpg'),
+              fit: BoxFit.cover
+            ),
           ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              CustomAppBar(primaryColor: primaryColor, secondaryColor: secondaryColor, auxColor: auxColor),
+              CustomAppBar(primaryColor: widget.primaryColor, secondaryColor: widget.secondaryColor, auxColor: widget.auxColor,textcolor: widget.textColor,),
               const SizedBox(height: 30,),
               ///if the file was upload or selected i'll be displayed on the screen
               if (pickedFile != null)
@@ -60,7 +63,7 @@ class _PredictionState extends State<Prediction> {
                     children: [
                       Container(
                         height: 300,
-                        color: secondaryColor,
+                        color: widget.secondaryColor,
                         child: //Text(pickedFile!.name)
                           //Text('${pickedFile.runtimeType}'),
                           Image.file(
@@ -101,81 +104,44 @@ class _PredictionState extends State<Prediction> {
                 ),
 
               ///Diagnosis container
-              if (pickedFile ==null)
+              if (pickedFile == null)
                 Padding(
                         padding: const EdgeInsets.all(25.0),
                         child: TextButton(
                           style: TextButton.styleFrom(
                             padding: const EdgeInsets.all(20.0),
-                            primary: Colors.black,
+                            primary: widget.textColor,
                             textStyle: const TextStyle(fontSize: 20,fontWeight: FontWeight.bold),
-                            backgroundColor: Colors.white,
-                            shadowColor: Colors.deepPurple.shade400,
+                            backgroundColor: widget.secondaryColor,
+                            shadowColor:widget.auxColor,
                             elevation: 20
                           ),
                           onPressed: selectFile,
                           child: const Text('Select file from galery'),
                         ),
                       ),
+              if (pickedFile == null)
+                Padding(padding: EdgeInsets.symmetric(horizontal:30),
+                  child: Text(
+                    'Select a photo as close to the skin lesion as posible. Hint(use the "macro" camera for better results.)',
+                    style: TextStyle(color: widget.textColor,fontWeight: FontWeight.bold,fontSize: 18),),
+                ),
               ///return to the home page
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal:20.0),
-                child: Container(
-                  padding: const EdgeInsets.all(15),
-                  height: 90,
-                  decoration: BoxDecoration(
-                    color: primaryColor,
-                    borderRadius: BorderRadius.circular(12),
-                     boxShadow: [
-                      BoxShadow(
-                        color: auxColor,
-                        spreadRadius: 1,
-                        blurRadius: 5,
-                        offset: const Offset(0, 7), // changes position of shadow
-                        )
-                     ]
-                    ),
-                  child: Row(
-                    children: [
-                      //text
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children:  [       
-                            Container(
-                              padding: const EdgeInsets.all(2),
-                              decoration: BoxDecoration(
-                                color: secondaryColor,
-                                borderRadius: BorderRadius.circular(12),
-                                boxShadow: [BoxShadow(
-                                  color: auxColor,
-                                  spreadRadius: 1,
-                                  blurRadius: 5,
-                                  offset: const Offset(0,7)
-                                  )]),
-                              child: Center(
-                                child: 
-                                TextButton(
-                                  onPressed: () {
-                                    Navigator.pop(context);
-                                  },
-                                  child: 
-                                    const Expanded(
-                                      child: Text(
-                                        'Return Home',
-                                        style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold),
-                                      ),
-                                    )
-                                ),
-                              ),
-                            )
-                          ],
+                        padding: const EdgeInsets.all(25.0),
+                        child: TextButton(
+                          style: TextButton.styleFrom(
+                            padding: const EdgeInsets.all(20.0),
+                            primary: widget.textColor,
+                            textStyle: const TextStyle(fontSize: 20,fontWeight: FontWeight.bold),
+                            backgroundColor: widget.primaryColor,
+                            shadowColor:widget.auxColor,
+                            elevation: 20
+                          ),
+                          onPressed: () => Navigator.pushNamed(context, '/'),
+                          child: const Text('Return Home'),
                         ),
-                      )
-                    ],
-                  ),
-                ),
-              ),
+                      ),
               const SizedBox(height: 30,),
 
             ]

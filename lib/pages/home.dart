@@ -4,40 +4,50 @@ import 'package:flutter/material.dart';
 
 
 class HomePage extends StatefulWidget {
+  final Color primaryColor ;
+  final Color secondaryColor ; 
+  final Color auxColor;
+  final Color textColor;
 
-  const HomePage({Key? key}) : super(key: key);
+  const HomePage({Key? key, 
+    required this.primaryColor,
+    required this.secondaryColor,
+    required this.auxColor,
+    required this.textColor,
+
+  }) : super(key: key);
 
   @override
   State<HomePage> createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
-  final Color primaryColor   = Colors.white;
-  final Color secondaryColor = Colors.cyan.shade200; 
-  final Color auxColor       = Colors.indigo.shade300;
-  final Color textColor      = Colors.orangeAccent;
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
         child: Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(begin: Alignment.topLeft,end: Alignment.bottomRight,colors: [primaryColor,secondaryColor,auxColor]),
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage('lib/images/background.jpg'),
+              fit: BoxFit.cover
+              ),   
           ),
           child: Column(
             children: [
               //*************appbar
-              CustomAppBar(primaryColor: primaryColor, secondaryColor: secondaryColor, auxColor: auxColor),
+              CustomAppBar(primaryColor: widget.primaryColor, secondaryColor: widget.secondaryColor, auxColor: widget.auxColor,textcolor: widget.textColor,),
               const SizedBox(height: 30,),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal:20.0),
                 child: Container(
                     padding: const EdgeInsets.all(10),
-                    decoration: BoxDecoration(color: primaryColor, boxShadow: [
+                    decoration: BoxDecoration(color: widget.primaryColor, boxShadow: [
                       BoxShadow(
-                        color: auxColor,
+                        color: widget.auxColor,
                         spreadRadius: 1,
-                        blurRadius: 5,
+                        blurRadius: 1,
                         offset: const Offset(0, 7), // changes position of shadow
                         ),
                     ],
@@ -52,14 +62,14 @@ class _HomePageState extends State<HomePage> {
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                const Text('Deep neural network for skin cancer diagnosis and prevention',
-                                  style: TextStyle(fontWeight: FontWeight.bold,fontSize: 15),
+                                Text('Deep neural network for skin cancer diagnosis and prevention',
+                                  style: TextStyle(fontWeight: FontWeight.bold,fontSize: 15, color: widget.textColor),
                                 ),
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: const [
+                                  children: [
                                     SizedBox(height: 10,),
-                                    Text('V_003',style: TextStyle(fontSize: 10,fontWeight: FontWeight.bold),),
+                                    Text('V_003',style: TextStyle(fontSize: 10,fontWeight: FontWeight.bold,color: widget.textColor),),
                                   ],
                                 )
                               ],
@@ -80,9 +90,9 @@ class _HomePageState extends State<HomePage> {
                 padding: const EdgeInsets.symmetric(horizontal:22.0),
                 child: Container(child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: const [
-                    Text('Technologies and Libraries used',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 15),),
-                    Text('References',style: TextStyle(fontSize: 12,fontWeight: FontWeight.w300),)
+                  children: [
+                    Text('Technologies and Libraries used',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 15,color: widget.textColor),),
+                    Text('References',style: TextStyle(fontSize: 12,fontWeight: FontWeight.w300, color: widget.textColor),)
                   ],
                 ),),
               ),
@@ -93,11 +103,11 @@ class _HomePageState extends State<HomePage> {
                 child: ListView(
                   scrollDirection: Axis.horizontal,
                   children: [
-                    ListCat(imgPath: 'lib/icons/tensorflow-icon.png',category: 'Tensorflow',primaryColor: primaryColor,secondaryColor: secondaryColor,auxColor: auxColor,),
-                    ListCat(imgPath: 'lib/icons/python.png',category: 'Python',primaryColor: primaryColor,secondaryColor: secondaryColor,auxColor: auxColor,),
-                    ListCat(imgPath: 'lib/icons/flutter-icon.png',category: 'Flutter',primaryColor: primaryColor,secondaryColor: secondaryColor,auxColor: auxColor,),
-                    ListCat(imgPath: 'lib/icons/docker-icon.png',category: 'Docker',primaryColor: primaryColor,secondaryColor: secondaryColor,auxColor: auxColor,),
-                    ListCat(imgPath: 'lib/icons/github.png',category: 'GitHub',primaryColor: primaryColor,secondaryColor: secondaryColor,auxColor: auxColor,),
+                    ListCat(imgPath: 'lib/icons/tensorflow-icon.png',category: 'Tensorflow',primaryColor: widget.primaryColor,secondaryColor: widget.secondaryColor,auxColor: widget.auxColor,textcolor: widget.textColor,),
+                    ListCat(imgPath: 'lib/icons/python.png',category: 'Python',primaryColor: widget.primaryColor,secondaryColor: widget.secondaryColor,auxColor: widget.auxColor,textcolor: widget.textColor,),
+                    ListCat(imgPath: 'lib/icons/flutter-icon.png',category: 'Flutter',primaryColor: widget.primaryColor,secondaryColor: widget.secondaryColor,auxColor: widget.auxColor,textcolor: widget.textColor,),
+                    ListCat(imgPath: 'lib/icons/docker-icon.png',category: 'Docker',primaryColor: widget.primaryColor,secondaryColor: widget.secondaryColor,auxColor: widget.auxColor,textcolor: widget.textColor,),
+                    ListCat(imgPath: 'lib/icons/github.png',category: 'GitHub',primaryColor: widget.primaryColor,secondaryColor: widget.secondaryColor,auxColor: widget.auxColor,textcolor: widget.textColor,),
                   ]
                 ),
               ),
@@ -111,13 +121,13 @@ class _HomePageState extends State<HomePage> {
                   padding: const EdgeInsets.all(15),
                   height: 160,
                   decoration: BoxDecoration(
-                    color: primaryColor,
+                    color: widget.primaryColor,
                     borderRadius: BorderRadius.circular(12),
                      boxShadow: [
                       BoxShadow(
-                        color: auxColor,
+                        color: widget.auxColor,
                         spreadRadius: 1,
-                        blurRadius: 5,
+                        blurRadius: 1,
                         offset: const Offset(0, 7), // changes position of shadow
                         )
                      ]
@@ -132,19 +142,19 @@ class _HomePageState extends State<HomePage> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children:  [
-                            const Text('Make a diagnosis',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),),
+                            Text('Make a diagnosis',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20, color: widget.textColor,),),
                             const SizedBox(height: 10,),
-                            const Text('Upload an image to make a diagnosis.'),
+                            Text('Upload an image to make a diagnosis.',style: TextStyle(color: widget.textColor,),),
                             const SizedBox(height: 10,),
                             Container(
                               padding: const EdgeInsets.all(2),
                               decoration: BoxDecoration(
-                                color: secondaryColor,
+                                color: widget.secondaryColor,
                                 borderRadius: BorderRadius.circular(12),
                                 boxShadow: [BoxShadow(
-                                  color: auxColor,
+                                  color: widget.auxColor,
                                   spreadRadius: 1,
-                                  blurRadius: 5,
+                                  blurRadius: 1,
                                   offset: Offset(0,7)
                                   )]),
                               child: Center(
@@ -154,10 +164,10 @@ class _HomePageState extends State<HomePage> {
                                     Navigator.pushNamed(context, '/prediction');
                                   },
                                   child: 
-                                      const Expanded(
+                                      Expanded(
                                       child: Text(
                                         'Diagnose',
-                                        style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold),
+                                        style: TextStyle(color: widget.textColor,fontWeight: FontWeight.bold),
                                       ),
                                     )
                                 ),
@@ -181,13 +191,13 @@ class _HomePageState extends State<HomePage> {
                 child: Container(
                   padding: const EdgeInsets.all(15),
                   decoration: BoxDecoration(
-                    color:primaryColor,
+                    color: widget.primaryColor,
                     borderRadius: BorderRadius.circular(12),
                     boxShadow: [
                                   BoxShadow(
-                                    color: auxColor,
+                                    color: widget.auxColor,
                                     spreadRadius: 1,
-                                    blurRadius: 5,
+                                    blurRadius: 1,
                                     offset: const Offset(0, 7), // changes position of shadow
                                     ),
                               ]),
@@ -199,24 +209,34 @@ class _HomePageState extends State<HomePage> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children:  [
-                            const Text('About the project',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),),
+                            Text('About the project',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20,color: widget.textColor,),),
                             const SizedBox(height: 10,),
-                            const Text('How the model was made and more.'),
+                            Text('How the model was made and more.',style: TextStyle(color: widget.textColor,),),
                             const SizedBox(height: 10,),
                             Container(
-                              padding: const EdgeInsets.all(12),
+                              height: 50,
+                              padding: const EdgeInsets.all(5),
                               decoration: BoxDecoration(
-                                color: secondaryColor, 
+                                color: widget.secondaryColor, 
                                 boxShadow: [
                                   BoxShadow(
-                                    color: auxColor,
+                                    color: widget.auxColor,
                                     spreadRadius: 1,
-                                    blurRadius: 5,
+                                    blurRadius: 1,
                                     offset: const Offset(0, 7), // changes position of shadow
                                     ),
                               ],
                               borderRadius: BorderRadius.circular(12)),
-                              child: const Center(child: Text('About an docs',style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold),),),
+                              child: TextButton(
+                                  onPressed: () {
+                                    Navigator.pushNamed(context, '/about');
+                                  },
+                                  child: 
+                                      Text(
+                                        'About and documentation',
+                                        style: TextStyle(color: widget.textColor,fontWeight: FontWeight.bold),
+                                      ),
+                                ),
                             )
                           ],
                         ),
