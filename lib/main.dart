@@ -2,7 +2,7 @@ import 'package:skin_cancer_app/pages/about.dart';
 import 'package:skin_cancer_app/pages/home.dart';
 import 'package:flutter/material.dart';
 import 'package:skin_cancer_app/pages/prediction.dart';
-import 'package:skin_cancer_app/pages/test.dart';
+
 
 void main() {
   runApp(MyApp());
@@ -23,7 +23,6 @@ class MyApp extends StatelessWidget {
         '/': (context) => HomePage(primaryColor: primaryColor,secondaryColor: secondaryColor,auxColor: auxColor,textColor: textColor,),
         '/prediction':(context) => Prediction(primaryColor: primaryColor,secondaryColor: secondaryColor,auxColor: auxColor,textColor: textColor,),
         '/about':(context) => AboutPage(primaryColor: primaryColor, secondaryColor: secondaryColor, auxColor: auxColor, textColor: textColor),
-        '/test': (context) => Test()
       },
       debugShowCheckedModeBanner: false,
     );

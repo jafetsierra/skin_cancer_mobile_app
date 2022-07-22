@@ -29,7 +29,7 @@ class _PredictionState extends State<Prediction> {
   
   ///file variable
   PlatformFile? pickedFile;
-  final String url = "https://skin-cancer-img.herokuapp.com/";
+  final String url = "https://skin-cancer-preimg.herokuapp.com/";
 
   ///file selection from galery
   Future selectFile() async{
