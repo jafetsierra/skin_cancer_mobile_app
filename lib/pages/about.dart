@@ -1,6 +1,8 @@
 import 'package:skin_cancer_app/utils/appbar.dart';
+import 'package:skin_cancer_app/utils/goDiagnosisPage.dart';
 import 'package:skin_cancer_app/utils/listcat.dart';
 import 'package:flutter/material.dart';
+import 'package:skin_cancer_app/utils/goHomePage.dart';
 
 
 class AboutPage extends StatefulWidget {
@@ -79,38 +81,10 @@ class _AboutPageState extends State<AboutPage> {
                 ),
               ),
 
+              ///---------diagnosis page
+              GoDiagnosisPage(primaryColor: widget.primaryColor, secondaryColor: widget.secondaryColor, auxColor: widget.auxColor, textColor: widget.textColor),
               ///---------Home page
-              Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: TextButton(
-                        style: TextButton.styleFrom(
-                          padding: const EdgeInsets.all(20.0),
-                          primary: widget.textColor,
-                          textStyle: const TextStyle(fontSize: 20,fontWeight: FontWeight.bold),
-                          backgroundColor: widget.secondaryColor,
-                          shadowColor:widget.auxColor,
-                          elevation: 20
-                        ),
-                        onPressed: () => Navigator.pushNamed(context, '/prediction'),
-                        child: const Text('Make a diagnosis'),
-                      ),
-                    ),
-              ///---------Home page
-              Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: TextButton(
-                        style: TextButton.styleFrom(
-                          padding: const EdgeInsets.all(20.0),
-                          primary: widget.textColor,
-                          textStyle: const TextStyle(fontSize: 20,fontWeight: FontWeight.bold),
-                          backgroundColor: widget.primaryColor,
-                          shadowColor:widget.auxColor,
-                          elevation: 20
-                        ),
-                        onPressed: () => Navigator.pushNamed(context, '/'),
-                        child: const Text('Return to HomePage'),
-                      ),
-                    ),
+              GoHomePage(primaryColor: widget.primaryColor, secondaryColor: widget.secondaryColor, auxColor: widget.auxColor, textColor: widget.textColor)
             ],
           ),
         ),

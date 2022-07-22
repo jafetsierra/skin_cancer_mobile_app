@@ -1,11 +1,13 @@
 import 'dart:convert';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:skin_cancer_app/pages/resultPage.dart';
 import 'package:skin_cancer_app/utils/appbar.dart';
 import 'dart:io';
 import 'package:skin_cancer_app/utils/diagnose.dart';
+import 'package:skin_cancer_app/utils/goHomePage.dart';
 import 'package:skin_cancer_app/utils/result.dart';
-
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class Prediction extends StatefulWidget {
   final Color primaryColor ;
@@ -28,6 +30,20 @@ class Prediction extends StatefulWidget {
 class _PredictionState extends State<Prediction> {
   
   ///file variable
+  final spinkit = SpinKitFadingCircle(
+    //color: Colors.white,
+    size: 60,
+    itemBuilder: (BuildContext context, int index) {
+      return DecoratedBox(
+          decoration: BoxDecoration(
+            color: index.isEven ? Colors.white : Colors.cyan,
+            shape: BoxShape.circle,
+
+          ),
+        );
+      },
+    );
+  bool isLoading = false;
   PlatformFile? pickedFile;
   final String url = "https://skin-cancer-preimg.herokuapp.com/";
 
@@ -77,13 +93,16 @@ class _PredictionState extends State<Prediction> {
                         child: TextButton(
                           style: TextButton.styleFrom(
                             padding: const EdgeInsets.all(20.0),
-                            primary: Colors.black,
+                            primary: widget.textColor,
                             textStyle: const TextStyle(fontSize: 20,fontWeight: FontWeight.bold),
-                            backgroundColor: Colors.white,
-                            shadowColor: Colors.deepPurple.shade400,
+                            backgroundColor: widget.secondaryColor,
+                            shadowColor: widget.auxColor,
                             elevation: 20
                           ),
                           onPressed: () async{
+                            setState(() {
+                              isLoading = true;
+                            });
                             var response = await sendImage(url, pickedFile!.path.toString());
                             if (response.statusCode!=200){
                               showDialog(context: context, 
@@ -92,11 +111,21 @@ class _PredictionState extends State<Prediction> {
                             else {
                               var values = json.decode(response.body);
                               values.forEach((k,v) => print(v['prediction'].toString()));
-                              showDialog(context: context, 
-                              builder: (BuildContext context) => predictionResult(context, values.toString()));
+                              //go to the response page
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => ResultPage(rta: values.toString(), primaryColor: widget.primaryColor, secondaryColor: widget.secondaryColor, auxColor: widget.auxColor, textColor: widget.textColor))
+                              );
+                              //showDialog(context: context, 
+                              //builder: (BuildContext context) => predictionResult(context, values.toString()));
                             }
+                            setState(() {
+                              isLoading = false;
+                            });
                           },
-                          child: const Text('Make Diagnosis'),
+                          child: isLoading
+                            ? spinkit
+                            : const Text('Make Diagnosis'),
                         ),
                       )
                     ],
@@ -127,22 +156,8 @@ class _PredictionState extends State<Prediction> {
                     style: TextStyle(color: widget.textColor,fontWeight: FontWeight.bold,fontSize: 18),),
                 ),
               ///return to the home page
-              Padding(
-                        padding: const EdgeInsets.all(25.0),
-                        child: TextButton(
-                          style: TextButton.styleFrom(
-                            padding: const EdgeInsets.all(20.0),
-                            primary: widget.textColor,
-                            textStyle: const TextStyle(fontSize: 20,fontWeight: FontWeight.bold),
-                            backgroundColor: widget.primaryColor,
-                            shadowColor:widget.auxColor,
-                            elevation: 20
-                          ),
-                          onPressed: () => Navigator.pushNamed(context, '/'),
-                          child: const Text('Return Home'),
-                        ),
-                      ),
-              const SizedBox(height: 30,),
+              GoHomePage(primaryColor: widget.primaryColor, secondaryColor: widget.secondaryColor, auxColor: widget.auxColor, textColor: widget.textColor),
+              const SizedBox(height: 50,),
 
             ]
           ),
