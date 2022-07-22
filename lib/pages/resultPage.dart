@@ -56,14 +56,14 @@ class _ResultPageState extends State<ResultPage> {
                         ),
                     ],
                     borderRadius: BorderRadius.circular(10)),
-                    height: 315,
+                    height: 350,
                     child: Column(
                       children: [
-                        const Text('Types of lesions',style: TextStyle(fontWeight: FontWeight.bold,color: Colors.white),),
+                        const Text('How to interpretate the results',style: TextStyle(fontWeight: FontWeight.bold,color: Colors.white),),
                         const SizedBox(height: 10,),
                         Image.asset('lib/images/dic.png',height: 180,),
                         const SizedBox(height: 5,),
-                        Text("The model is able to diagnose 7 diferent types of skin lesions. Even though it has an accuracy above 90% it's just for prevention. Do not use as a final diagnose and pay your demartologist a visit in case of suspicion of cancer.",
+                        const Text("The model is able to diagnose 7 diferent types of skin lesions. The name indicates the type, and the number indicates what the model think is the probability of that particular lesion. Even though it has an accuracy above 90% it's just for prevention. Do not use as a final diagnose and pay your demartologist a visit in case of suspicion of cancer.",
                             style: TextStyle(color: Colors.white),),
                         // Text('Checkout the official repository for a better insight and specific information',
                         //   style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold,color: widget.textColor),
