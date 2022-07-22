@@ -41,8 +41,8 @@ class _ResultPageState extends State<ResultPage> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               CustomAppBar(primaryColor: widget.primaryColor, secondaryColor: widget.secondaryColor, auxColor: widget.auxColor,textcolor: widget.textColor,),
-              Text(widget.rta,
-              style: TextStyle(color: widget.textColor),),
+              Text('The Diagnosis is '+widget.rta.substring(25,27)+', with a probability of: '+widget.rta.substring(28,35),
+              style: TextStyle(color: widget.textColor,fontWeight: FontWeight.bold,fontSize: 25),),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal:20.0),
                 child: Container(
@@ -63,13 +63,8 @@ class _ResultPageState extends State<ResultPage> {
                         const SizedBox(height: 10,),
                         Image.asset('lib/images/dic.png',height: 180,),
                         const SizedBox(height: 5,),
-                        const Text("The model is able to diagnose 7 diferent types of skin lesions. The name indicates the type, and the number indicates what the model think is the probability of that particular lesion. Even though it has an accuracy above 90% it's just for prevention. Do not use as a final diagnose and pay your demartologist a visit in case of suspicion of cancer.",
+                        const Text("The model is able to diagnose 7 diferent types of skin lesions. The name indicates the type, and the number indicates what the model think is the probability of that particular lesion in a range (0-1). Even though it has an accuracy above 90% it's just for prevention. Do not use as a final diagnose and pay your demartologist a visit in case of suspicion of cancer.",
                             style: TextStyle(color: Colors.white),),
-                        // Text('Checkout the official repository for a better insight and specific information',
-                        //   style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold,color: widget.textColor),
-                        //   overflow: TextOverflow.ellipsis,
-                        // )
-
                       ],
                     ),
                 ),
