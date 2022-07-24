@@ -41,7 +41,7 @@ class _ResultPageState extends State<ResultPage> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               CustomAppBar(primaryColor: widget.primaryColor, secondaryColor: widget.secondaryColor, auxColor: widget.auxColor,textcolor: widget.textColor,),
-              Text('The Diagnosis is '+widget.rta.substring(25,27)+', with a probability of: '+widget.rta.substring(28,35),
+              Text('The Diagnosis is '+widget.rta.substring(25,27)+', with a probability of '+widget.rta.substring(28,35),
               style: TextStyle(color: widget.textColor,fontWeight: FontWeight.bold,fontSize: 25),),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal:20.0),
