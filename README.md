@@ -1,6 +1,6 @@
 # skin_cancer_app
 
-A new Flutter project.
+mobile applications for giagnosis of multiple skin lesions, included some types of skin regular cancer.
 
 ## Getting Started
 
